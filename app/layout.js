@@ -2,6 +2,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import AuthStatus from "./ui/AuthStatus";
+import PageTransition from "./ui/PageTransition";
+import Footer from "./ui/Footer";   
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,11 +34,18 @@ export default function RootLayout({ children }) {
               <Link href="/contact">Contact</Link>
               <Link href="/shop">Shop</Link>
             </div>
-            <AuthStatus />
+            {/* Right side: only auth now */}
+            <div className="flex items-center gap-3">
+              <AuthStatus />
+            </div>
           </nav>
         </header>
 
-        <main className="max-w-5xl mx-auto p-6">{children}</main>
+        <main className="max-w-5xl mx-auto p-6">
+          <PageTransition>{children}</PageTransition>
+        </main>
+
+        <Footer /> 
       </body>
     </html>
   );

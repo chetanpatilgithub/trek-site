@@ -1,26 +1,53 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ========= THEME TOKENS (Tailwind v4) ========= */
+@theme {
+  /* Use the Next.js Geist fonts exposed as CSS vars */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Brand colors */
+  --color-brand-dark: #0b1d26;   /* mountain night */
+  --color-brand-light: #1b2d36;  /* card/nav tone */
+  --color-brand-accent: #ff7849; /* sunrise orange */
+  --color-brand-text: #e5e7eb;   /* soft text */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ========= BASE (Night Trek = default) ========= */
+html, body {
+  @apply bg-brand-dark text-brand-text antialiased;
+  font-family: var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+a { @apply transition-colors duration-200; }
+a:hover { @apply text-brand-accent; }
+
+header { @apply border-white/10; }
+
+/* Focus ring (nice keyboard a11y) */
+:focus-visible { @apply outline-none ring-2 ring-brand-accent/70 ring-offset-2 ring-offset-brand-dark; }
+
+/* ========= DAY MODE (toggle adds .light on <html>) ========= */
+html.light, html.light body {
+  @apply bg-white text-black;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+html.light header { @apply border-gray-200; }
+html.light a:hover { @apply text-brand-accent; }
+html.light :focus-visible { @apply ring-offset-white; }
+
+/* ========= OPTIONAL UTILITIES ========= */
+/* Muted card surface on dark */
+.card {
+  @apply bg-brand-light/40 border border-white/10 rounded-xl;
+}
+
+/* Primary button using brand accent */
+.btn-primary {
+  @apply bg-brand-accent text-black px-5 py-2.5 rounded font-medium hover:brightness-110;
+}
+
+/* Subtle bordered button */
+.btn-ghost {
+  @apply border border-white/15 px-5 py-2.5 rounded hover:bg-white/10;
 }
